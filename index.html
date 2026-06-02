@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dream Diary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Nunito:wght@400;700;800;900&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f5f9;--card:rgba(255,255,255,0.62);--point:#7aa2f7;--point2:#9d7af7;
+  --tag:#e6ecf5;--text:#3a4252;--soft:rgba(58,66,82,0.6);--line:rgba(120,90,170,0.13);
+  --pointSoft:rgba(122,162,247,0.16);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{font-family:"Nunito","Noto Sans KR",system-ui,sans-serif;font-weight:600;color:var(--text);
+  background:radial-gradient(60% 50% at 18% 12%,rgba(122,162,247,0.3),transparent 60%),
+    radial-gradient(55% 50% at 85% 18%,rgba(157,122,247,0.28),transparent 60%),var(--bg);
+  background-attachment:fixed;-webkit-user-select:none;user-select:none;}
+img{pointer-events:none;-webkit-user-drag:none;user-drag:none}
+.wrap{max-width:1000px;margin:0 auto;padding:28px 22px 60px}
+.head h1{font-family:"Gaegu","Noto Sans KR",cursive;font-size:30px}
+.head p{color:var(--soft);font-size:14px;margin-top:2px}
+.badge{display:inline-block;margin-top:8px;font-size:11px;color:var(--soft);background:var(--card);
+  border:1px solid var(--line);border-radius:20px;padding:4px 10px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:22px}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden;cursor:pointer;
+  box-shadow:0 10px 40px rgba(150,112,200,0.16);transition:transform .15s}
+.card:hover{transform:translateY(-3px)}
+.banner{position:relative;aspect-ratio:3/2;overflow:hidden}
+.banner img{width:100%;height:100%;object-fit:cover}
+.banner .ph{width:100%;height:100%;background:linear-gradient(135deg,#f8c8dc,#c9b6e4)}
+.ovl{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.65),rgba(0,0,0,.1) 55%,transparent);
+  padding:38px 14px 12px;color:#fff;display:flex;flex-direction:column;justify-content:flex-end}
+.ovl .nm{font-weight:800;font-size:15px}
+.ovl .dt{font-size:11px;opacity:.8}
+.ovl .dd{font-size:20px;font-weight:900;margin-top:2px}
+.soon{position:absolute;right:8px;top:8px;background:rgba(255,255,255,.9);color:var(--point);
+  font-size:11px;font-weight:800;border-radius:20px;padding:3px 9px}
+.cbody{padding:11px 13px;min-height:42px}
+.chip{display:inline-block;background:var(--pointSoft);color:var(--point);font-size:12px;font-weight:700;
+  border-radius:20px;padding:4px 9px;margin-bottom:6px}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{background:var(--tag);color:rgba(58,66,82,0.75);font-size:11px;font-weight:600;border-radius:20px;padding:2px 8px}
+/* detail */
+#detail{display:none}
+#detail.on{display:block}
+.back{background:none;border:none;color:var(--soft);font-weight:800;font-size:14px;cursor:pointer;margin-bottom:14px}
+.dbox{position:relative;border-radius:22px;overflow:hidden;box-shadow:0 10px 40px rgba(150,112,200,0.16)}
+.dbox .bg{position:absolute;inset:0}
+.dbox .bg img{width:100%;height:100%;object-fit:cover}
+.dbox .bg .ph{width:100%;height:100%;background:linear-gradient(135deg,#f8c8dc,#c9b6e4)}
+.dbox .bg .ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7),rgba(0,0,0,.3) 60%,rgba(0,0,0,.2))}
+.dbox .ct{position:relative;padding:30px 28px;color:#fff}
+.dbox .ct .nm{font-size:21px;font-weight:900}
+.dbox .ct .dt{font-size:13px;opacity:.8;margin-top:2px}
+.dbox .ct .ol{font-size:13px;opacity:.85;margin-top:4px}
+.dbox .ct .dd{font-size:34px;font-weight:900;margin-top:14px}
+.dbox .ct .tags{margin-top:14px}
+.dbox .ct .tag{background:rgba(255,255,255,.2);color:#fff}
+.sec{margin-top:26px}
+.sec h2{font-size:18px;font-weight:900;margin-bottom:12px}
+.ann{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;padding:12px 16px;margin-bottom:10px}
+.ann.soon{background:#fff7df;border-color:#f3d97a}
+.ann .ic{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ann .nm{font-weight:800}
+.ann .dt{font-size:12px;color:var(--soft)}
+.ann .lbl{margin-left:auto;font-size:16px;font-weight:900}
+.profs{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:640px){.profs{grid-template-columns:1fr}}
+.prof{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.prof .ph{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.prof .av{width:48px;height:48px;border-radius:50%;background:var(--pointSoft);color:var(--point);overflow:hidden;
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;flex-shrink:0}
+.prof .av img{width:100%;height:100%;object-fit:cover}
+.prof .nm{font-size:16px;font-weight:900}
+.prow{display:flex;gap:8px;padding:8px 16px;border-bottom:1px solid rgba(120,90,170,0.08);font-size:14px}
+.prow .k{width:84px;flex-shrink:0;font-size:12px;font-weight:800;color:var(--soft)}
+.chap{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:0 24px}
+.chap .it{border-top:1px solid var(--line)}
+.chap .it:first-child{border-top:none}
+.chap .hd{display:flex;align-items:center;gap:12px;padding:18px 0;cursor:pointer}
+.chap .hd .ti{font-size:18px;font-weight:800;flex:1}
+.chap .hd .st{font-size:14px;color:var(--soft);margin-top:3px}
+.chap .hd .cv{transition:transform .2s}
+.chap .it.open .cv{transform:rotate(180deg)}
+.chap .bd{display:none;padding-bottom:22px;font-size:14px;line-height:1.7}
+.chap .it.open .bd{display:block}
+.chap .bd img{max-width:100%;border-radius:10px;margin:6px 0}
+.chap .bd blockquote{border-left:3px solid var(--point);background:var(--pointSoft);padding:6px 12px;border-radius:6px;margin:6px 0}
+.empty{text-align:center;color:var(--soft);padding:50px;font-size:14px}
+</style>
+</head><body>
+<div class="wrap">
+  <div class="head"><h1>Dream Diary</h1><p>제이의 덕질장</p><span class="badge">공유 보기전용 · Dream Diary</span></div>
+  <div id="gallery"></div>
+  <div id="detail"></div>
+</div>
+<script>
+(function(){
+  var DATA = {"cards":[{"id":"pair-1","coupleName":"EHCO × 밴스","sectionTitle":"• LOVE","startDate":"2025-12-24","tags":["소비","AI이미지","맘찍","로그"],"anniversaries":[{"id":"a1","name":"100일","icon":"🎂","dayCount":100,"show":true},{"id":"a2","name":"반년 (180일)","icon":"🌙","dayCount":180,"show":true},{"id":"a3","name":"1000일","icon":"💍","dayCount":1000,"show":true}]}],"threshold":30};
+  var TH = DATA.threshold||30;
+  var MS = 86400000;
+  function midnight(d){return new Date(d.getFullYear(),d.getMonth(),d.getDate())}
+  function today(){return midnight(new Date())}
+  function days(a,b){return Math.round((midnight(b)-midnight(a))/MS)}
+  function plus(sd){if(!sd)return null;var s=new Date(sd);if(isNaN(s))return null;return days(s,today())+1}
+  function pad(n){return (n<10?'0':'')+n}
+  function annDate(sd,a){var s=new Date(sd);if(a.dayCount!=null){var d=new Date(s);d.setDate(d.getDate()+(a.dayCount-1));return midnight(d)}if(a.fixedDate){var f=new Date(a.fixedDate);return isNaN(f)?null:midnight(f)}return null}
+  function annStat(card,a){if(!card.startDate)return null;var d=annDate(card.startDate,a);if(!d)return null;var diff=days(today(),d);var lbl=diff===0?'D-DAY':(diff>0?'D-'+diff:'D+'+(-diff));return{date:d,diff:diff,lbl:lbl}}
+  function nextAnn(card){var arr=(card.anniversaries||[]).filter(function(a){return a.show}).map(function(a){return{a:a,s:annStat(card,a)}}).filter(function(x){return x.s&&x.s.diff>=0});arr.sort(function(x,y){return x.s.diff-y.s.diff});return arr[0]||null}
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+  function cardHtml(c,i){
+    var dp=plus(c.startDate); var nx=nextAnn(c);
+    var soon = nx && nx.s.diff<=TH ? '<div class="soon">⭐ '+nx.s.lbl+'</div>' : '';
+    var bn = (c.banner) ? '<img src="'+c.banner+'">' : '<div class="ph"></div>';
+    var ddhtml = dp!=null ? '<div class="dd" data-sd="'+esc(c.startDate)+'">D+'+dp+'</div>' : '';
+    var dt = c.startDate ? '<div class="dt">'+esc(c.startDate)+' 부터</div>' : '';
+    var chip = nx ? '<div class="chip">'+esc(nx.a.icon)+' '+esc(nx.a.name)+'까지 '+nx.s.lbl+'</div>' : '';
+    var tags = (c.tags||[]).map(function(t){return '<span class="tag">'+esc(t)+'</span>'}).join('');
+    return '<div class="card" onclick="openDetail('+i+')"><div class="banner">'+bn+soon+
+      '<div class="ovl"><div class="nm">'+esc(c.coupleName)+'</div>'+dt+ddhtml+'</div></div>'+
+      '<div class="cbody">'+chip+'<div class="tags">'+tags+'</div></div></div>';
+  }
+
+  function detailHtml(c){
+    var dp=plus(c.startDate);
+    var bg = (c.detailBanner||c.banner) ? '<img src="'+(c.detailBanner||c.banner)+'">' : '<div class="ph"></div>';
+    var dt = c.startDate ? '<div class="dt">'+esc(c.startDate)+' 부터</div>' : '';
+    var ol = c.oneLiner ? '<div class="ol">“'+esc(c.oneLiner)+'”</div>' : '';
+    var dd = dp!=null ? '<div class="dd">D+'+dp+' <span style="font-size:14px;font-weight:700">💗 함께한 날</span></div>' : '';
+    var tags = (c.tags||[]).length ? '<div class="tags">'+c.tags.map(function(t){return '<span class="tag">'+esc(t)+'</span>'}).join('')+'</div>' : '';
+    // anniversaries
+    var anns=(c.anniversaries||[]).filter(function(a){return a.show}).map(function(a){return{a:a,s:annStat(c,a)}});
+    anns.sort(function(x,y){var dx=x.s?x.s.diff:null,dy=y.s?y.s.diff:null;if(dx==null)return 1;if(dy==null)return -1;var fx=dx>=0?0:1,fy=dy>=0?0:1;if(fx!==fy)return fx-fy;return fx===0?dx-dy:dy-dx});
+    var annHtml = anns.length ? anns.map(function(o,idx){var s=o.s;var soon=s&&s.diff>=0&&s.diff<=TH&&idx===0;var col=o.a.color||'var(--point)';
+      var date=s?(s.date.getFullYear()+'-'+pad(s.date.getMonth()+1)+'-'+pad(s.date.getDate())):'';
+      return '<div class="ann'+(soon?' soon':'')+'"><div class="ic" style="background:'+col+'22">'+esc(o.a.icon)+'</div>'+
+        '<div><div class="nm">'+esc(o.a.name)+(soon?' ⭐':'')+'</div><div class="dt">'+date+'</div></div>'+
+        '<div class="lbl" style="color:'+col+'">'+(s?s.lbl:'')+'</div></div>'}).join('') : '';
+    var annSec = anns.length ? '<div class="sec"><h2>🎀 우리의 기념일</h2>'+annHtml+'</div>' : '';
+    // profiles
+    var chars=(c.characters||[]);
+    var profHtml = chars.length ? '<div class="sec"><h2>👥 캐릭터 프로필</h2><div class="profs">'+chars.map(function(ch){
+      var av = ch.avatar ? '<img src="'+ch.avatar+'">' : esc((ch.name||'').slice(0,1)||'🙂');
+      var props=(ch.properties||[]).map(function(p){return '<div class="prow"><div class="k">'+esc(p.key)+'</div><div>'+esc(p.value||'')+'</div></div>'}).join('');
+      return '<div class="prof"><div class="ph"><div class="av">'+av+'</div><div class="nm">'+esc(ch.name||'이름 없음')+'</div></div>'+props+'</div>'
+    }).join('')+'</div></div>' : '';
+    // chapters
+    var chaps=(c.chapters||[]);
+    var chapHtml = chaps.length ? '<div class="sec"><h2>📖 챕터</h2><div class="chap">'+chaps.map(function(ch){
+      var st = ch.subtitle ? '<div class="st">'+esc(ch.subtitle)+'</div>' : '';
+      return '<div class="it"><div class="hd" onclick="toggleChap(this)"><div><div class="ti">'+esc(ch.title)+'</div>'+st+'</div>'+
+        '<svg class="cv" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>'+
+        '<div class="bd">'+(ch.body||'<i style="opacity:.5">내용 없음</i>')+'</div></div>'
+    }).join('')+'</div></div>' : '';
+
+    return '<button class="back" onclick="closeDetail()">← 갤러리</button>'+
+      '<div class="dbox"><div class="bg">'+bg+'<div class="ov"></div></div><div class="ct"><div class="nm">'+esc(c.coupleName)+'</div>'+dt+ol+dd+tags+'</div></div>'+
+      annSec+profHtml+chapHtml;
+  }
+
+  window.openDetail=function(i){var c=DATA.cards[i];document.getElementById('detail').innerHTML=detailHtml(c);
+    document.getElementById('gallery').style.display='none';document.getElementById('detail').className='on';window.scrollTo(0,0)}
+  window.closeDetail=function(){document.getElementById('detail').className='';document.getElementById('detail').innerHTML='';
+    document.getElementById('gallery').style.display='block';window.scrollTo(0,0)}
+  window.toggleChap=function(el){var it=el.parentNode;it.className=it.className.indexOf('open')>=0?'it':'it open'}
+
+  function render(){
+    var g=document.getElementById('gallery');
+    if(!DATA.cards.length){g.innerHTML='<div class="empty">아직 공유된 카드가 없어요</div>';return}
+    g.innerHTML='<div class="grid">'+DATA.cards.map(cardHtml).join('')+'</div>';
+  }
+  render();
+
+  // 소프트 차단
+  document.addEventListener('contextmenu',function(e){e.preventDefault()});
+  document.addEventListener('dragstart',function(e){e.preventDefault()});
+  document.addEventListener('selectstart',function(e){e.preventDefault()});
+})();
+</script>
+</body></html>
